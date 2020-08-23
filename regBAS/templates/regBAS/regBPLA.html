@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Регистрация БПЛА</title>
 </head>
 <body>
     <h1>Регистрация БПЛА</h1>
+    <form action="{% url 'BPLA_reg' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>

@@ -5,6 +5,12 @@
     <title>Профиль</title>
 </head>
 <body>
-    Пользователь {{ user.username }} Профиль
+    Пользователь {{ user.username }}
+    <h4>Летательные аппараты</h4>
+    <ul>
+        {% for i in BPLA %}
+            <li>{{ i.classification }} {{ i.type }} весом {{ i.weight }}кг</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
