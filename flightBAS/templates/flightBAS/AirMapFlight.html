@@ -10,14 +10,30 @@
             body { margin: 0; padding: 0; }
             .map {
                 position: absolute;
-                width: 100%;
+                width: 70%;
                 height: 100%;
                 top: 0;
-                right: 0;
+                left: 30%;
             }
         </style>
     </head>
     <body>
+        <div class="menu">
+            <select name="BPLA">
+                {% for i in BPLA %}
+                    <option>{{ i.classification }} {{ i.type }} {{ i.weight }}кг</option>
+                {% endfor %}
+            </select>
+            <br>
+
+            <label for="start_point">start point:</label>
+            <input type="number" id = 'start_point'>
+            <br>
+
+            <label for="end_point">end point:</label>
+            <input type="number" id = 'end_point'>
+            <br>
+        </div>
         <div id="map" class="map"></div>
         <script>
             const AIRMAP_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsX2lkIjoiY3JlZGVudGlhbHxtREFaOEVndXE3a25wQkZvRTJ4OU90azdxNXh4IiwiYXBwbGljYXRpb25faWQiOiJhcHBsaWNhdGlvbnwyRTVFSlJMSG01Z1B6RFR2ek1XRHVtTEp3eCIsIm9yZ2FuaXphdGlvbl9pZCI6ImRldmVsb3Blcnx6a0R3NnhlRkdLUG5SOGNXV0JrR1hjRTkyZ1dwIiwiaWF0IjoxNTk4MTA2ODY2fQ.UH9BpGP9-T4rqAWFcbXWQZ6ZjM1CE0pkhTo-GSZmbAU'

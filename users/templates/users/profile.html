@@ -6,10 +6,11 @@
 </head>
 <body>
     Пользователь {{ user.username }}
+    <a href="{% url 'homepage' %}">Домашняя страница</a>
     <h4>Летательные аппараты</h4>
     <ul>
         {% for i in BPLA %}
-            <li>{{ i.classification }} {{ i.type }} весом {{ i.weight }}кг</li>
+            <li>{{ i.classification }} {{ i.type }} весом {{ i.weight }}кг   --- {{ i.verification }}</li>
         {% endfor %}
     </ul>
 </body>

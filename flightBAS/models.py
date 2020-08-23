@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from regBAS.models import Bas
 
 
-class flight(models.Model):
+class Flight(models.Model):
 
     owner = models.ForeignKey(User, on_delete = models.CASCADE)
     dron = models.ForeignKey(Bas, on_delete = models.CASCADE)

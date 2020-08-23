@@ -1,8 +1,9 @@
 from django.shortcuts import render
+import regBAS.models as rb
 
 
 def airmap_map(request):
-    return render(request, "flightBAS/AirMapFlight.html")
+    BPLA = rb.Bas.objects.filter(owner=request.user)
+    context = {"BPLA": BPLA}
+    return render(request, "flightBAS/AirMapFlight.html", context)
 
-def flight_analitics(request):
-    return render(request, "flightBAS/FlightAnalitics.html")

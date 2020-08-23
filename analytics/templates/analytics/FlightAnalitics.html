@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Аналитика</title>
+</head>
+<body>
+    Аналитика полетов
+    <ul>
+        {% for flight in flights %}
+            <li>{{ flight.date }}{{ flight.dron.classification }} {{ flight.dron.type }} {{ flight.start_point }} --> {{ flight.end_point }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
