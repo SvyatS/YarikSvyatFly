@@ -5,6 +5,19 @@
     <title>Title</title>
 </head>
 <body>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
 
+        <!---<td>{{ form.username.label_tag }}</td>---->
+        <label class="text-login">Пользователь</label>
+        {{ form.username }}
+
+        <!----<td>{{ form.password.label_tag }}</td>----->
+        <label class="text-login">Пароль&nbsp;&nbsp;</label>
+        {{ form.password }}
+
+        <input type="submit" value="Войти" align="center">
+        <input type="hidden" name="next" value="{{ next }}" align="center">
+    </form>
 </body>
 </html>
