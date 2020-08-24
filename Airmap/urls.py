@@ -7,6 +7,7 @@ import regBAS.views
 import analytics.views
 import users.views
 from django.contrib.auth import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
@@ -20,3 +21,5 @@ urlpatterns = [
     path('profile/', users.views.profile, name='profile'),
 
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()

@@ -1,3 +1,5 @@
+{% load static from staticfiles %}
+
 <!doctype html>
 <html>
     <head>
@@ -10,14 +12,36 @@
             body { margin: 0; padding: 0; }
             .map {
                 position: absolute;
-                width: 70%;
+                width: 80%;
                 height: 100%;
                 top: 0;
-                left: 30%;
+                left: 20%;
             }
         </style>
     </head>
     <body>
+        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+            type="text/css"
+        />
+        <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+        <style>
+            .geocoder-dropdown-item {
+                padding: 5px;
+            }
+            .geocoder-dropdown-icon {
+                margin-right: 10px;
+            }
+            .geocoder-dropdown-text {
+                color: #5a3fc0;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: larger;
+}
+        </style>
         <div class="menu">
             <select name="BPLA">
                 {% for i in BPLA %}
@@ -26,73 +50,16 @@
             </select>
             <br>
 
-            <label for="start_point">start point:</label>
-            <input type="number" id = 'start_point'>
+            <label for="x">широта:</label>
+            <input type="number" id="x">
             <br>
 
-            <label for="end_point">end point:</label>
-            <input type="number" id = 'end_point'>
-            <br>
+            <label for="y">долгота:</label>
+            <input type="number" id="y">
+
+            <button onclick="sendData()">отправка</button>
         </div>
         <div id="map" class="map"></div>
-        <script>
-            const AIRMAP_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsX2lkIjoiY3JlZGVudGlhbHxtREFaOEVndXE3a25wQkZvRTJ4OU90azdxNXh4IiwiYXBwbGljYXRpb25faWQiOiJhcHBsaWNhdGlvbnwyRTVFSlJMSG01Z1B6RFR2ek1XRHVtTEp3eCIsIm9yZ2FuaXphdGlvbl9pZCI6ImRldmVsb3Blcnx6a0R3NnhlRkdLUG5SOGNXV0JrR1hjRTkyZ1dwIiwiaWF0IjoxNTk4MTA2ODY2fQ.UH9BpGP9-T4rqAWFcbXWQZ6ZjM1CE0pkhTo-GSZmbAU'
-            const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1Ijoic3Z5YXRvc2xhdjIwMDIiLCJhIjoiY2tlNXJkemVhMHc0eTJ6bDZiMHFxODNpOSJ9.HU1Pn9ZK5bH3Y6LTzqwEPA'
-            if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
-                mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN
-                const map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/mapbox/streets-v8',
-                    center: [85.0, 56.5],
-                    zoom: 10
-                })
-                const config = {
-                    "airmap": {
-                        "api_key": AIRMAP_API_KEY
-                    },
-                    "auth0": {
-                        "client_id": "",
-                        "callback_url": ""
-                    },
-                    "mapbox": {
-                        "access_token": MAPBOX_ACCESS_TOKEN
-                    }
-                }
-                const options = {
-                    preferredRulesets: [
-                        'usa_part_107',
-                        'deu_rules_waiver'
-                    ],
-                    overrideRulesets: [
-                        // 'usa_part_107'
-                    ],
-                    enableRecommendedRulesets: true,
-                    theme: 'light'
-                    /* refer to the docs for a comprehensive list of options */
-                }
-                const plugin = new this.AirMap.ContextualAirspacePlugin(config, options);
-                map.addControl(plugin, 'top-left')
-
-                // Example for how ruleset changes are surfaced to the consuming application.
-                plugin.on('jurisdictionChange', (data) => console.log('jurisdictionChange', data))
-                plugin.on('airspaceLayerClick', (data) => console.log('airspaceLayerClick', data))
-
-                // Example for how the consuming app can call the plugin for jurisdictions or selected rulesets.
-                setTimeout(() => {
-                    console.log({
-                        jurisdictions: plugin.getJurisdictions(),
-                        selectedRulelsets: plugin.getSelectedRulesets()
-                    })
-                }, 5000)
-            } else {
-                console.error(
-                    'Missing AIRMAP_API_KEY or MAPBOX_ACCESS_TOKEN. ' +
-                    'These are required for developing locally.\n\n' +
-                    'Please save these values in localStorage by entering the following in your browser console:\n\n' +
-                    'localStorage.setItem(\'AIRMAP_API_KEY\', \'<your_key>\');\n' +
-                    'localStorage.setItem(\'MAPBOX_ACCESS_TOKEN\', \'<your_token>\');\n\n'
-                );
-            }
-        </script>
+        <script type="text/javascript" src="{% static 'js/flight.js' %}"></script>
     </body>
 </html>
