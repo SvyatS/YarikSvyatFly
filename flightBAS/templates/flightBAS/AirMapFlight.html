@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <script src="https://cdn.airmap.io/js/contextual-airspace/v1.3/airmap.contextual-airspace-plugin.min.js" async=false defer=false></script>
         <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
         <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css" rel="stylesheet" />
         <style>
             body { margin: 0; padding: 0; }
@@ -49,15 +50,9 @@
                 {% endfor %}
             </select>
             <br>
-
-            <label for="x">широта:</label>
-            <input type="number" id="x">
-            <br>
-
-            <label for="y">долгота:</label>
-            <input type="number" id="y">
-
-            <button onclick="sendData()">отправка</button>
+            <button name="select_polygon">Выбрать полигон</button>
+            <button name="apply_polygon" onclick="apply_polygon();">Применить полигон</button>
+            <h3 id="coords">Координаты</h3>
         </div>
         <div id="map" class="map"></div>
         <script type="text/javascript" src="{% static 'js/flight.js' %}"></script>

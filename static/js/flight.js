@@ -9,6 +9,12 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
     zoom: 10
     });
 
+    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.1.0/mapbox-gl-rtl-text.js');
+    map.addControl(new MapboxLanguage({
+        defaultLanguage: 'ru'
+    }));
+
+
     var geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         types: 'poi',
@@ -22,6 +28,72 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
         mapboxgl: mapboxgl
     });
     map.addControl(geocoder);
+
+    Polygon = [
+        [84.448460, 56.528496],
+        [84.553860, 56.542279],
+        [84.568949, 56.485051],
+        [84.464489, 56.485249],
+    ];
+
+    map.on('load', function() {
+        map.addSource('maine', {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Polygon',
+                    'coordinates': [
+                        Polygon
+                    ]
+                }
+            }
+        });
+
+        map.addLayer({
+            'id': 'maine',
+            'type': 'fill',
+            'source': 'maine',
+            'layout': {},
+            'paint': {
+                'fill-color': '#088',
+                'fill-opacity': 0.8
+            }
+        });
+    });
+
+    var doc = document.getElementById("coords");
+    
+    function update_poligon(){
+        data = {
+            'type': 'Feature',
+                'geometry': {
+                    'type': 'Polygon',
+                    'coordinates': [
+                        Polygon
+                    ]
+                }
+            }
+
+        map.getSource('maine').setData(data);
+
+   }
+
+    map.on('click', function(e) {
+        point = []
+        point.push(e.lngLat.lng);
+        point.push(e.lngLat.lat);
+        Polygon.push(point);
+        doc.innerHTML += '<br>x: '+ point[0];
+        doc.innerHTML += "<br>y: "+ point[1] + '<br>';
+        update_poligon();
+    });
+
+   function apply_polygon(){
+    Polygon = []
+    update_poligon();
+    doc.innerHTML = '';
+   }
 
 
 
