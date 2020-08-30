@@ -29,12 +29,9 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
     });
     map.addControl(geocoder);
 
-    Polygon = [
-        [84.448460, 56.528496],
-        [84.553860, 56.542279],
-        [84.568949, 56.485051],
-        [84.464489, 56.485249],
-    ];
+    Polygon = [];
+
+    var apply = false; 
 
     map.on('load', function() {
         map.addSource('maine', {
@@ -63,6 +60,7 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
     });
 
     var doc = document.getElementById("coords");
+    document.getElementsByClassName('flight')[0].style.display = "none"
     
     function update_poligon(){
         data = {
@@ -79,23 +77,38 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
 
    }
 
-    map.on('click', function(e) {
-        point = []
-        point.push(e.lngLat.lng);
-        point.push(e.lngLat.lat);
-        Polygon.push(point);
-        doc.innerHTML += '<br>x: '+ point[0];
-        doc.innerHTML += "<br>y: "+ point[1] + '<br>';
-        update_poligon();
-    });
+
 
    function apply_polygon(){
-    Polygon = []
-    update_poligon();
-    doc.innerHTML = '';
+        apply = false;
+        document.getElementsByClassName('flight')[0].style.display = "block";
+        StartStop();
    }
 
+   function end_flight(){
+        document.getElementsByClassName('flight')[0].style.display = "none";
+        alert("Время полета: "+dh+":"+dm+":"+ds);
+        StartStop();
+   }
 
+   function select_polygon(){
+        apply = true;
+        Polygon = []
+        update_poligon();
+        doc.innerHTML = '';
+   }
+
+    map.on('click', function(e) {
+        if(apply){
+            point = []
+            point.push(e.lngLat.lng);
+            point.push(e.lngLat.lat);
+            Polygon.push(point);
+            doc.innerHTML += '<br>x: '+ point[0];
+            doc.innerHTML += "<br>y: "+ point[1] + '<br>';
+            update_poligon();
+        }
+    });
 
 
     const config = {
