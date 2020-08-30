@@ -19,6 +19,7 @@ urlpatterns = [
     path('registrationBPLA/', regBAS.views.RegistrationBPLA.as_view(), name='BPLA_reg'),
     path('flightAnalytics/', analytics.views.flight_analitics, name='flight_analytics'),
     path('profile/', users.views.profile, name='profile'),
+    path('api/createflight/', flightBAS.views.api_create_flight, name='create_flight_api'),
 
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 

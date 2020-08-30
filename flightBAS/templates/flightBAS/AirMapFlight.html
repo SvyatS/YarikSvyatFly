@@ -3,11 +3,12 @@
 <!doctype html>
 <html>
     <head>
-        <title>Mapbox-gl-js Ruleset Plugin</title>
+        <title>Полет</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <script src="https://cdn.airmap.io/js/contextual-airspace/v1.3/airmap.contextual-airspace-plugin.min.js" async=false defer=false></script>
         <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js"></script>
-        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>      
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css" rel="stylesheet" />
         <style>
             body { margin: 0; padding: 0; }
@@ -44,9 +45,9 @@
 }
         </style>
         <div class="menu">
-            <select name="BPLA">
+            <select name="BPLA" id="BPLA">
                 {% for i in BPLA %}
-                    <option>{{ i.classification }} {{ i.type }} {{ i.weight }}кг</option>
+                    <option>{{ i.classification }} {{ i.type }} {{ i.weight }}кг id {{i.id}}</option>
                 {% endfor %}
             </select>
             <br>
@@ -66,5 +67,6 @@
         <div id="map" class="map"></div>
         <script type="text/javascript" src="{% static 'js/flight.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/timer.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/SendData.js' %}"></script>
     </body>
 </html>

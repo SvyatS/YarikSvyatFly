@@ -77,18 +77,27 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
 
    }
 
+    var start_time, end_time;
 
 
    function apply_polygon(){
         apply = false;
         document.getElementsByClassName('flight')[0].style.display = "block";
         StartStop();
+        start_time = Date.now();
    }
 
    function end_flight(){
+        end_time = Date.now();
+        BPLA = document.getElementById("BPLA").value;
+        index_id = BPLA.indexOf('id ');
+        BPLA_id = BPLA.substring(index_id+3);
+        console.log(start_time, end_time, BPLA_id);
+        CreateFlightApi(BPLA_id, start_time, end_time, Polygon);
         document.getElementsByClassName('flight')[0].style.display = "none";
         alert("Время полета: "+dh+":"+dm+":"+ds);
         StartStop();
+
    }
 
    function select_polygon(){
