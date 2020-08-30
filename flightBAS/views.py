@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import regBAS.models as rb
+from .models import *
 
 
 def airmap_map(request):
@@ -7,3 +8,6 @@ def airmap_map(request):
     context = {"BPLA": BPLA}
     return render(request, "flightBAS/AirMapFlight.html", context)
 
+def api_create_flight(request):
+	pass
+	#	Flight.objects.create()
