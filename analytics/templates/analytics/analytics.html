@@ -23,6 +23,11 @@
                 height: 50%;
                 float: right;
             }
+
+            .table-info{
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
         </style>
     </head>
     <body>
@@ -43,7 +48,7 @@
 }
         </style>
         <div class="info">
-            <table>
+            <table class="table-info">
                 <tr>
                     <td>
                         БПЛА
@@ -65,7 +70,7 @@
                     <td>{{ flight.end_flight }}</td>
                 </tr>
             </table>
-            
+            <a href="{% url 'homepage' %}">Домашняя страница</a>
         </div>
        
         <div id="map" class="map"></div>
