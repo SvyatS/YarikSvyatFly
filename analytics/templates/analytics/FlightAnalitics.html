@@ -8,7 +8,7 @@
     Аналитика полетов
     <ul>
         {% for flight in flights %}
-            <li>Полет id: {{ flight.id }}  {{ flight.start_flight }} - {{ flight.end_flight}}  {{ flight.dron.classification }} {{ flight.dron.type }}</li>
+            <li><a class="flight" href="{% url 'flight_analytics' flight.id %}">Полет id: {{ flight.id }}  {{ flight.start_flight }} - {{ flight.end_flight}}  {{ flight.dron.classification }} {{ flight.dron.type }}</a></li>
         {% endfor %}
     </ul>
 </body>
