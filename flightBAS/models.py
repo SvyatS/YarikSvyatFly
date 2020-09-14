@@ -11,6 +11,10 @@ class Flight(models.Model):
     start_flight = models.DateTimeField(null = True)
     end_flight = models.DateTimeField(null = True)
     polygon = jsonfield.JSONField()
+    condition_weather = models.CharField(max_length=64)
+    temperature_weather = models.FloatField()
+    speed_wind = models.FloatField()
+    
 
     def __str__(self):
         return str(self.owner.username)

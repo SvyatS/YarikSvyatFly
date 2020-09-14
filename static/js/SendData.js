@@ -1,4 +1,4 @@
-function CreateFlightApi(BPLA, start_flight, end_flight, polygon){
+function CreateFlightApi(BPLA, start_flight, end_flight, polygon, weather){
 	var csrftoken = getCookie('csrftoken');
 
 	axios({
@@ -8,7 +8,10 @@ function CreateFlightApi(BPLA, start_flight, end_flight, polygon){
     		'BPLA':BPLA,
     		'start_flight':start_flight,
     		'end_flight': end_flight,
-    		'polygon': polygon
+			'polygon': polygon,
+			'condition_weather' : weather.condition,	 
+			'temperature_weather': weather.temperature,
+			'speed_wind': weather.wind.speed
   		},
   		headers: {
     		"X-CSRFToken": csrftoken, 
