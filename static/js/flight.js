@@ -60,6 +60,7 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
     });
 
     var doc = document.getElementById("coords");
+    var weather_class = document.getElementById("weather");
     document.getElementsByClassName('flight')[0].style.display = "none"
     
     function update_poligon(){
@@ -78,6 +79,7 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
    }
 
     var start_time, end_time;
+    var weather;
 
 
    function apply_polygon(){
@@ -85,6 +87,29 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
         document.getElementsByClassName('flight')[0].style.display = "block";
         StartStop();
         start_time = Date.now();
+        let x = Polygon[0][0]
+        let y = Polygon[0][1]
+        console.log(x)
+        let url = 'https://api.airmap.com/advisory/v1/weather?latitude=' + y + '&longitude=' + x 
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+              "X-API-Key": AIRMAP_API_KEY, 
+              "content-type": "application/json"
+            }
+      }).then(function (response) {
+            var weather = response.data.data.weather[0]
+            console.log(weather.temperature)
+            let answer = 'Информация о погоде:<br>' + weather.condition + '<br>' + 
+                        'температура: ' + weather.temperature + '<br>'
+            weather_class.innerHTML = answer
+      }).catch(function (error) {
+            console.log(error)
+      });
+       
+    //   console.log(answer)
+       
    }
 
    function end_flight(){
@@ -92,7 +117,6 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
         BPLA = document.getElementById("BPLA").value;
         index_id = BPLA.indexOf('id ');
         BPLA_id = BPLA.substring(index_id+3);
-        console.log(start_time, end_time, BPLA_id);
         CreateFlightApi(BPLA_id, start_time, end_time, Polygon);
         document.getElementsByClassName('flight')[0].style.display = "none";
         alert("Время полета: "+dh+":"+dm+":"+ds);
