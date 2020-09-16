@@ -14,13 +14,13 @@
             .map {
                 display: inline-block;
                 position: absolute;
-                width: 50%;
-                height: 50%;
+                width: 70%;
+                height: 70%;
                 top: 0;
             }
             .info{
-                width: 50%;
-                height: 50%;
+                width: 30%;
+                height: 100%;
                 float: right;
             }
 
@@ -69,6 +69,42 @@
                     <td>Конец полета</td>
                     <td>{{ flight.end_flight }}</td>
                 </tr>
+            </table>
+            <h3>Информация о погоде</h3>
+            <table class="table-info">
+                <tr>
+                    <td>
+                        Состояние
+                    </td>
+                    <td>
+                        {{ flight.condition_weather }} .
+                    </td>
+                </tr>
+                <tr>
+                    <td>Температура</td>
+                    <td>{{ flight.temperature_weather }} градусов C</td>
+                </tr>
+                 <tr>
+                    <td>Видимость</td>
+                    <td>{{ flight.visibility }}</td>
+                </tr>
+                <tr>
+                    <td>Скорость ветра</td>
+                    <td>{{ flight.speed_wind }}миль/час</td>
+                </tr>
+                <tr>
+                    <td>Порывы ветра</td>
+                    <td>{{ flight.gusting }}</td>
+                </tr>
+                 <tr>
+                    <td>Направление ветра</td>
+                    <td>{{ flight.heading }}</td>
+                </tr>
+                 <tr>
+                    <td>Атмосферная температура</td>
+                    <td>{{ flight.dew_point }}</td>
+                </tr>
+                
             </table>
             <a href="{% url 'homepage' %}">Домашняя страница</a>
         </div>

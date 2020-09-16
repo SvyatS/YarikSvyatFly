@@ -26,7 +26,12 @@ def api_create_flight(request):
 
 		condition_weather   = json_data['condition_weather']
 		temperature_weather = float(json_data['temperature_weather'])
+		visibility          = float(json_data['visibility'])
+		dew_point			= float(json_data['dew_point'])
+
 		speed_wind          = float(json_data['speed_wind'])
+		gusting             = float(json_data['gusting'])
+		heading             = float(json_data['heading'])
 
 		dron = rb.Bas.objects.get(id = bpla_id)
 
@@ -38,7 +43,11 @@ def api_create_flight(request):
 				polygon = polygon,
 				condition_weather = condition_weather,
 				temperature_weather = temperature_weather,
-				speed_wind = speed_wind
+				speed_wind = speed_wind,
+				gusting = gusting,
+				heading = heading,
+				visibility = visibility,
+				dew_point = dew_point
 			)
 		return HttpResponse("Полет сохранен")
 	#	Flight.objects.create()

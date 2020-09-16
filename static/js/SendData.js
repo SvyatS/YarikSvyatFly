@@ -11,7 +11,11 @@ function CreateFlightApi(BPLA, start_flight, end_flight, polygon, weather){
 			'polygon': polygon,
 			'condition_weather' : weather.condition,	 
 			'temperature_weather': weather.temperature,
-			'speed_wind': weather.wind.speed
+			'speed_wind': weather.wind.speed,
+      'gusting': weather.wind.gusting,
+      'heading': weather.wind.heading,
+      'visibility': weather.visibility,
+      'dew_point': weather.dew_point,
   		},
   		headers: {
     		"X-CSRFToken": csrftoken, 
