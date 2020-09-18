@@ -21,6 +21,8 @@ urlpatterns = [
     path('flightAnalytics/', analytics.views.general_analytics, name='general_analytics'),
     path('profile/', users.views.profile, name='profile'),
     path('api/createflight/', flightBAS.views.api_create_flight, name='create_flight_api'),
+    path('api/generator/', flightBAS.views.send_coords, name='generator'),
+    path('generator/', flightBAS.views.generator_html, name='generatorHTML')
 
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 

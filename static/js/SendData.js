@@ -28,6 +28,29 @@ function CreateFlightApi(BPLA, start_flight, end_flight, polygon, weather){
 	});
 }
 
+function send_coords(points, fl_id){
+  var csrftoken = getCookie('csrftoken');
+  axios({
+    method: 'post',
+    url: '../api/generator/',
+    data: {
+      'coords': points,
+      'id': fl_id
+      },
+
+      headers: {
+        "X-CSRFToken": csrftoken, 
+        "content-type": "application/json"
+      }
+
+  }).then(function (response) {
+      console.log(response)
+  }).catch(function (error) {
+      console.log(error)
+  });
+
+}
+
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

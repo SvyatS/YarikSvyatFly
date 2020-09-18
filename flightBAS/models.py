@@ -5,7 +5,6 @@ import jsonfield
 
 
 class Flight(models.Model):
-
     owner               = models.ForeignKey(User, on_delete = models.CASCADE)
     dron                = models.ForeignKey(Bas, on_delete = models.CASCADE)
     start_flight        = models.DateTimeField(null = True)
@@ -25,5 +24,17 @@ class Flight(models.Model):
     class Meta:
         verbose_name = 'Полет'
         verbose_name_plural = 'Полеты'
+
+class CoordsFlight(models.Model):
+    owner  = models.ForeignKey(User, on_delete = models.CASCADE)
+    coords = jsonfield.JSONField()
+
+    def __str__(self):
+        return str(self.owner.username)
+
+    class Meta:
+        verbose_name = 'Координаты полета'
+        verbose_name_plural = 'Координаты полетов'
+
 
 

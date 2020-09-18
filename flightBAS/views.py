@@ -36,18 +36,36 @@ def api_create_flight(request):
 		dron = rb.Bas.objects.get(id = bpla_id)
 
 		Flight.objects.create(
-				owner = request.user,
-				dron = dron,
-				start_flight = start_time,
-				end_flight = end_time,
-				polygon = polygon,
-				condition_weather = condition_weather,
+				owner               = request.user,
+				dron                = dron,
+				start_flight        = start_time,
+				end_flight          = end_time,
+				polygon             = polygon,
+				condition_weather   = condition_weather,
 				temperature_weather = temperature_weather,
-				speed_wind = speed_wind,
-				gusting = gusting,
-				heading = heading,
-				visibility = visibility,
-				dew_point = dew_point
+				speed_wind          = speed_wind,
+				gusting             = gusting,
+				heading             = heading,
+				visibility          = visibility,
+				dew_point           = dew_point
 			)
 		return HttpResponse("Полет сохранен")
 	#	Flight.objects.create()
+
+def send_coords(request):
+	if request.method == "POST":
+		json_data = json.loads(request.body)
+		flight_id = json_data['id']
+		coords    = json_data['coords']
+
+		CoordsFlight.objects.update_or_create(id = flight_id,
+				defaults = {'owner': request.user, 'coords': coords}
+			)
+
+		return HttpResponse("Успешно")
+
+def generator_html(request):
+	flights = len(CoordsFlight.objects.all())
+	return render(request, "flightBAS/GeneratorCoords.html", {'len': flights})
+
+

@@ -1,0 +1,59 @@
+{% load static from staticfiles %}
+
+<!doctype html>
+<html>
+    <head>
+        <title>Полет</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <script src="https://cdn.airmap.io/js/contextual-airspace/v1.3/airmap.contextual-airspace-plugin.min.js" async=false defer=false></script>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>      
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css" rel="stylesheet" />
+        <style>
+            body { margin: 0; padding: 0; }
+            .map {
+                position: absolute;
+                width: 70%;
+                height: 100%;
+                top: 0;
+                left: 30%;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+            type="text/css"
+        />
+        <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+        <style>
+            .geocoder-dropdown-item {
+                padding: 5px;
+            }
+            .geocoder-dropdown-icon {
+                margin-right: 10px;
+            }
+            .geocoder-dropdown-text {
+                color: #5a3fc0;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: larger;
+}
+        </style>
+        <div class="menu">
+            <h4>Всего {{ len }} полетов</h4>
+            <label for="flight">Укажите ID:ы</label>
+            <input type="number" id="flight">
+            <button type="button" onclick="push_polygon()">Отправить координаты</button>
+            <div id="coords"></div>
+        </div>
+       
+        <div id="map" class="map"></div>
+        <script type="text/javascript" src="{% static 'js/generator.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/SendData.js' %}"></script>
+    </body>
+</html>
