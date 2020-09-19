@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 import regBAS.models as rb
 from .models import *
 import json
@@ -67,5 +68,26 @@ def send_coords(request):
 def generator_html(request):
 	flights = len(CoordsFlight.objects.all())
 	return render(request, "flightBAS/GeneratorCoords.html", {'len': flights})
+
+def api_show_drones(request):
+	flights = CoordsFlight.objects.all()
+	response = []
+
+	for flight in flights:
+		response.append(
+				{
+					'type': 'Feature',
+                    'geometry': {
+                    	'type': 'Point',
+                        'coordinates': flight.coords[ len(flight.coords) - 1 ]
+                    },
+                    'properties': {
+                    	'title': flight.owner.username
+                    }
+				}
+			)
+
+	return JsonResponse({"ans": response})
+
 
 

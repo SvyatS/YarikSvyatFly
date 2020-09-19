@@ -31,6 +31,22 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
 
     Polygon = [];
 
+    var coords_drones = [];
+
+
+     axios({
+        method: 'get',
+        url: '../api/coords/',
+        headers: {
+            "content-type": "application/json"
+        }
+    }).then(function (response) {
+        coords_drones = response.data
+    }).catch(function (error) {
+        console.log(error)
+    });
+    
+
     var apply = false; 
 
     map.on('load', function() {
@@ -46,7 +62,7 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
                 }
             }
         });
-
+    
         map.addLayer({
             'id': 'maine',
             'type': 'fill',
@@ -57,10 +73,45 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
                 'fill-opacity': 0.8
             }
         });
+
+        map.loadImage(
+            'http://127.0.0.1:8000/static/img/drone_small.png',
+            function (error, image) {
+                if (error) throw error;
+                    map.addImage('custom-marker', image);
+                // Add a GeoJSON source with 2 points
+                map.addSource('points', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': coords_drones.ans
+                    }
+                });
+ 
+                // Add a symbol layer
+                map.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'points',
+                    'layout': {
+                        'icon-image': 'custom-marker',
+                        // get the title name from the source's "title" property
+                        'text-field': ['get', 'title'],
+                        'text-font': [
+                            'Open Sans Semibold',
+                            'Arial Unicode MS Bold'
+                        ],
+                        'text-offset': [0, 1.25],
+                        'text-anchor': 'top'
+                    }
+                });
+            }
+        );
     });
 
     var weather_class = document.getElementById("weather");
     document.getElementsByClassName('flight')[0].style.display = "none"
+
     
     function update_poligon(){
         data = {
@@ -189,4 +240,7 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
         'localStorage.setItem(\'MAPBOX_ACCESS_TOKEN\', \'<your_token>\');\n\n'
     );
 }
+
+
+
 
