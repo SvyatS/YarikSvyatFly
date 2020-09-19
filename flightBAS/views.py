@@ -87,7 +87,12 @@ def api_show_drones(request):
 				}
 			)
 
-	return JsonResponse({"ans": response})
+	full_data = {
+            'type': 'FeatureCollection',
+            'features': response
+        }
+
+	return JsonResponse({"ans": full_data})
 
 
 

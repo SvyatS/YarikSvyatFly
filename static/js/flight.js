@@ -33,18 +33,36 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
 
     var coords_drones = [];
 
-
-     axios({
+    axios({
         method: 'get',
         url: '../api/coords/',
         headers: {
             "content-type": "application/json"
         }
-    }).then(function (response) {
-        coords_drones = response.data
-    }).catch(function (error) {
+        }).then(function (response) {
+            coords_drones = response.data.ans.features
+        }).catch(function (error) {
         console.log(error)
-    });
+        });
+   
+
+
+    function get_coords_drones(){
+        axios({
+        method: 'get',
+        url: '../api/coords/',
+        headers: {
+            "content-type": "application/json"
+        }
+        }).then(function (response) {
+            console.log(response.data.ans)
+            map.getSource('points').setData(response.data.ans);
+        }).catch(function (error) {
+        console.log(error)
+        });
+    }
+    
+    setInterval(get_coords_drones, 3000);
     
 
     var apply = false; 
@@ -84,7 +102,7 @@ if (AIRMAP_API_KEY && MAPBOX_ACCESS_TOKEN) {
                     'type': 'geojson',
                     'data': {
                         'type': 'FeatureCollection',
-                        'features': coords_drones.ans
+                        'features': coords_drones
                     }
                 });
  
